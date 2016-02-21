@@ -90,19 +90,27 @@ STATS_DB_USER_PASSWORD = os.environ.get("STATS_DB_PASSWORD")
 STATS_DB_HOST = os.environ.get('OPENSHIFT_MYSQL_DB_HOST') or 'localhost'
 STATS_DB_PORT = os.environ.get('OPENSHIFT_MYSQL_DB_PORT') or '3306'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'stats',
-        'USER': 'stats',
-        'PASSWORD': STATS_DB_USER_PASSWORD,
-        'HOST': STATS_DB_HOST,
-        'PORT': STATS_DB_PORT
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # GETTING-STARTED: change 'db.sqlite3' to your sqlite3 database:
-        # 'NAME': os.path.join(DATA_DIR, 'db.sqlite3'),
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(DATA_DIR, 'db.sqlite3')
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'stats',
+            'USER': 'stats',
+            'PASSWORD': STATS_DB_USER_PASSWORD,
+            'HOST': STATS_DB_HOST,
+            'PORT': STATS_DB_PORT
+            # 'ENGINE': 'django.db.backends.sqlite3',
+            # GETTING-STARTED: change 'db.sqlite3' to your sqlite3 database:
+            # 'NAME': os.path.join(DATA_DIR, 'db.sqlite3'),
+        }
+    }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

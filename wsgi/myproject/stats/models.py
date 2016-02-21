@@ -52,7 +52,7 @@ class Stats(models.Model):
 
 def create(n, cprefix='city', uprefix='user'):
     print 'Creating {num} messages'.format(num=n)
-    start = datetime.now()
+    start = timezone.now()
     for i in range(n):
         if i % 1000 == 0:
             print "   {i} of {num}".format(i=i, num=n)
@@ -66,7 +66,7 @@ def create(n, cprefix='city', uprefix='user'):
             username='{uprefix}-{user:06}'.format(uprefix=uprefix, user=user),
             message='message-{msg:04}'.format(msg=message)
         )
-    finished = datetime.now()
+    finished = timezone.now()
     secs = (finished-start).total_seconds()
     rate = float(n) / secs
     print 'created {num} messages at {rate:.2f} messages/second'.format(num=n, rate=rate)
